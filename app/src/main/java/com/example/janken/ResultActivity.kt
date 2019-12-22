@@ -2,6 +2,7 @@ package com.example.janken
 
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import kotlinx.android.synthetic.main.activity_result.*
@@ -54,6 +55,12 @@ class ResultActivity : AppCompatActivity() {
 
         saveData(myHand, comHand ,gameResult)
     }
+
+    override fun onTouchEvent(event: MotionEvent) :Boolean {
+        finish()
+        return super.onTouchEvent(event)
+    }
+
 
     private fun saveData(myHand: Int, comHand: Int, gameResult: Int) {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
