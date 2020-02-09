@@ -1,5 +1,6 @@
 package com.example.janken
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.MotionEvent
@@ -13,13 +14,21 @@ class ResultActivity : AppCompatActivity() {
     val choki = 1
     val pa = 2
 
+    var mp: MediaPlayer? = null // 追加
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
         val id = intent.getIntExtra("MY_HAND", 0)
 
+        mp = MediaPlayer.create(applicationContext, R.raw.pon) // 追加
+
+        mp?.start()
+        mp?.isLooping=false
+
         val myHand: Int
         myHand = when (id) {
+
             R.id.gu -> {
                 myHandImage.setImageResource(R.drawable.gu)
                 gu
@@ -76,7 +85,7 @@ class ResultActivity : AppCompatActivity() {
                 else ->
                     0
             }
-        val editor = pref.edit()
+        pref.edit()
         pref.edit {
             putInt("GAME_COUNT", gameCount + 1)
             putInt("WINNING_STREAK_COUNT", edtWinningStreakCount)
@@ -119,4 +128,15 @@ class ResultActivity : AppCompatActivity() {
         }
         return hand
     }
+
+    override fun onResume() {
+        super.onResume()
+        mp?.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mp?.pause()
+    }
+
 }
