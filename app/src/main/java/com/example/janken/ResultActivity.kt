@@ -7,6 +7,8 @@ import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import kotlinx.android.synthetic.main.activity_result.*
+import com.example.janken.GlobalVariable.gMyCnt
+import com.example.janken.GlobalVariable.gchCnt
 
 class ResultActivity : AppCompatActivity() {
 
@@ -60,10 +62,17 @@ class ResultActivity : AppCompatActivity() {
             2 -> resultLabel.setText(R.string.result_lose)  // 負けた場合
         }
 
+        when (gameResult) {
+            1 -> gMyCnt ++
+            2 -> gchCnt ++
+        }
+
+
         backButton.setOnClickListener { finish() }
 
         saveData(myHand, comHand ,gameResult)
     }
+
 
     override fun onTouchEvent(event: MotionEvent) :Boolean {
         finish()

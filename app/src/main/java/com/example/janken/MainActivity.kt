@@ -17,37 +17,58 @@ import java.util.*
 import kotlin.concurrent.schedule
 import android.media.MediaPlayer
 import android.net.Uri
+import android.widget.TextView
+import com.example.janken.GlobalVariable.gMyCnt
+import com.example.janken.GlobalVariable.gchCnt
 import java.io.IOException
+
+object GlobalVariable {
+    var gMyCnt = 0
+    var gchCnt = 0
+}
+
 
 class MainActivity : AppCompatActivity() {
 
     var mp: MediaPlayer? = null // 追加
+    //private val handler = Handler()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // タイトル画面を表示
+        //setContentView(R.layout.activity_title)
+
+
         mp = MediaPlayer.create(applicationContext, R.raw.jankenlong) // 追加
 
-        //mp.setLooping(true);
-        //mp.seekTo(0);
-        //mp.setVolume(0.5f, 0.5f);
         mp?.isLooping = true
 
         mp?.seekTo(0)
         //mp?.setVolume(0.5f,0.5f)
         mp?.start()
 
-        gu.setOnClickListener { onJankenButtonTapped(it) }
-        choki.setOnClickListener { onJankenButtonTapped(it) }
-        pa.setOnClickListener { onJankenButtonTapped(it) }
-
+         gu.setOnClickListener { onJankenButtonTapped(it)
+        //showResult()
+        }
+        choki.setOnClickListener { onJankenButtonTapped(it)
+        //showResult()
+        }
+        pa.setOnClickListener { onJankenButtonTapped(it)
+        //showResult()
+        }
 
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         pref.edit {
             clear()
         }
+    }
+
+    fun showResult() {
+        textView6.text = gMyCnt.toString()
+        textView5.text = gchCnt.toString()
     }
 
     fun onJankenButtonTapped(view: View?) {
@@ -59,12 +80,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         mp?.start()
+        showResult()
     }
 
     override fun onPause() {
         super.onPause()
         mp?.pause()
     }
-
-
-}
+ }
