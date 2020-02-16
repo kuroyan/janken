@@ -1,26 +1,19 @@
 package com.example.janken
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.media.AudioAttributes
-import android.media.AudioManager
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.preference.PreferenceManager
-import android.view.View
-import androidx.core.content.edit
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import kotlin.concurrent.schedule
+import android.content.pm.ActivityInfo
+import android.hardware.SensorEvent
 import android.media.MediaPlayer
-import android.net.Uri
-import android.widget.TextView
+import android.os.Build
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.example.janken.GlobalVariable.gMyCnt
 import com.example.janken.GlobalVariable.gchCnt
-import java.io.IOException
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 object GlobalVariable {
     var gMyCnt = 0
@@ -35,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -60,10 +54,15 @@ class MainActivity : AppCompatActivity() {
         //showResult()
         }
 
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        pref.edit {
-            clear()
-        }
+        //val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        //pref.edit {
+        //    clear()
+        //}
+    }
+
+
+    fun radianToDegree(rad: Float): Int {
+        return Math.floor(Math.toDegrees(rad.toDouble())).toInt()
     }
 
     fun showResult() {

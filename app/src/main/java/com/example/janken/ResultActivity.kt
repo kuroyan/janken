@@ -1,5 +1,6 @@
 package com.example.janken
 
+import android.content.pm.ActivityInfo
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -20,6 +21,7 @@ class ResultActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContentView(R.layout.activity_result)
         val id = intent.getIntExtra("MY_HAND", 0)
 
